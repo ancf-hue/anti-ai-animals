@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#0a0a0a">
     <title>Анти ИИ: Животные поют</title>
+    
+    <!-- Иконки -->
     <link rel="icon" href="logo.jpeg" type="image/jpeg">
     <link rel="shortcut icon" href="logo.jpeg">
     <link rel="apple-touch-icon" href="logo.jpeg">
+    
+    <!-- Яндекс.Вебмастер (если нужно будет подтвердить права повторно, вставьте код сюда) -->
+    <!-- <meta name="yandex-verification" content="ВАШ_КОД_ВЕРИФИКАЦИИ" /> -->
+
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         body { background: #000; font-family: system-ui, -apple-system, sans-serif; overflow: hidden; height: 100dvh; display: flex; justify-content: center; align-items: center; }
+        
+        /* 9:16 Контейнер */
         .app-container {
             width: 100%; height: 100dvh; max-width: 420px;
             aspect-ratio: 9/16; max-height: 100vh;
@@ -18,12 +26,14 @@
             position: relative; overflow: hidden; display: flex; flex-direction: column;
             box-shadow: 0 0 25px rgba(0,0,0,0.7);
         }
+        
         .screen {
             display: none; flex: 1; flex-direction: column;
             align-items: center; padding: 10px 8px 16px;
             position: relative; overflow-y: auto;
         }
         .screen.active { display: flex; }
+        
         .logo { width: 50px; height: 50px; object-fit: contain; border-radius: 8px; margin-bottom: 4px; background: #222; }
         .header { text-align: center; margin-bottom: 4px; width: 100%; }
         .header h1 { font-size: 1.15rem; line-height: 1.2; }
@@ -92,28 +102,12 @@
             box-shadow: 0 1px 0 rgba(0,0,0,0.2);
             background: rgba(255,255,255,0.1);
         }
-        .project-link:last-child {
-            margin-bottom: 0;
-        }
-        .project-icon {
-            font-size: 1.8rem;
-        }
-        .project-info {
-            flex: 1;
-        }
-        .project-name {
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: #fff;
-        }
-        .project-desc {
-            font-size: 0.65rem;
-            color: #aaa;
-        }
-        .project-arrow {
-            font-size: 1.2rem;
-            color: #4a9eff;
-        }
+        .project-link:last-child { margin-bottom: 0; }
+        .project-icon { font-size: 1.8rem; }
+        .project-info { flex: 1; }
+        .project-name { font-size: 0.85rem; font-weight: bold; color: #fff; }
+        .project-desc { font-size: 0.65rem; color: #aaa; }
+        .project-arrow { font-size: 1.2rem; color: #4a9eff; }
         
         .back-btn {
             position: absolute; top: 10px; left: 10px; z-index: 30;
@@ -123,23 +117,23 @@
             box-shadow: 0 3px 0 rgba(0,0,0,0.3);
             transition: 0.05s linear;
         }
-        .back-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 1px 0 rgba(0,0,0,0.3);
-        }
+        .back-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.3); }
         
         .info-box {
             background: #1a1a1a; padding: 10px; border-radius: 10px;
             text-align: left; max-width: 380px; line-height: 1.4; margin: 6px 0; font-size: 0.8rem;
         }
         .info-box b { color: #ffd54f; }
+        
         canvas {
             background: #fff; border-radius: 12px; 
             width: 85%; max-width: 300px; height: 380px;
             touch-action: none; box-shadow: 0 4px 12px rgba(0,0,0,0.6); margin: 6px 0;
         }
+        
         .audio-status { font-size: 0.7rem; color: #66ff66; margin-top: 4px; opacity: 0; transition: opacity 0.3s; }
         .audio-status.show { opacity: 1; }
+        
         .support-box {
             background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
             border: 2px solid #4a9eff; border-radius: 14px; padding: 16px;
@@ -158,20 +152,24 @@
     </style>
 </head>
 <body>
+
 <div class="app-container">
+    
+    <!-- МЕНЮ -->
     <div id="menu" class="screen active">
         <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
         <div class="header"><h1>АНТИ ИИ: ЖИВОТНЫЕ ПОЮТ</h1></div>
-        <button class="menu-btn btn-red" onclick="showScreen('instructions')">🔴 КАК ПОЛЬЗОВАТЬСЯ</button>
         <button class="menu-btn btn-orange" onclick="showScreen('cat')">🐱 КОШКА</button>
         <button class="menu-btn btn-blue" onclick="showScreen('dog')">🐕 СОБАКА</button>
         <button class="menu-btn btn-green" onclick="showScreen('parrot')">🦜 ПОПУГАЙ</button>
         <button class="menu-btn btn-purple" onclick="showScreen('raccoon')">🦝 ЕНОТ</button>
         <button class="menu-btn btn-brown" onclick="showScreen('squirrel')">🐿️ БЕЛКА</button>
-        <button class="menu-btn btn-support" onclick="showScreen('support')">❤️ ПОДДЕРЖАТЬ</button>
+        <button class="menu-btn btn-red" onclick="showScreen('instructions')">🔴 КАК ПОЛЬЗОВАТЬСЯ</button>
+        <button class="menu-btn btn-dark" onclick="showScreen('support')">❤️ ПОДДЕРЖАТЬ</button>
         <div class="audio-status" id="audioStat">🔊 Звук активирован</div>
     </div>
     
+    <!-- КАК ПОЛЬЗОВАТЬСЯ -->
     <div id="instructions" class="screen">
         <button class="back-btn" onclick="showScreen('menu')">← НАЗАД</button>
         <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
@@ -184,11 +182,6 @@
             4️⃣ Вы — второй голос. Питомец — первый.<br>
             5️⃣ В конце похвалите и дайте лакомство! 🍬<br><br>
             ✨ <b>Совет:</b> Положите телефон на пол, рядом с местом, где любит сидеть ваш питомец.
-        </div>
-        <div class="info-box" style="background:rgba(0,0,0,0.6);">
-            <b>🗑️ КАК УДАЛИТЬ:</b><br>
-            • В браузере: закройте вкладку.<br>
-            • На телефоне: зажмите иконку → «Удалить».
         </div>
         
         <!-- НАШИ ПРОЕКТЫ -->
@@ -212,9 +205,15 @@
             </a>
         </div>
         
+        <div class="info-box" style="background:rgba(0,0,0,0.6);">
+            <b>🗑️ КАК УДАЛИТЬ:</b><br>
+            • В браузере: закройте вкладку.<br>
+            • На телефоне: зажмите иконку → «Удалить».
+        </div>
         <div class="tip-text">💚 Бесплатный проект без интернета</div>
     </div>
     
+    <!-- ПОДДЕРЖАТЬ -->
     <div id="support" class="screen">
         <button class="back-btn" onclick="showScreen('menu')">← НАЗАД</button>
         <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
@@ -233,54 +232,21 @@
         <div class="footer-note">⚡ Анонимно · Оффлайн · Твои данные только у тебя</div>
     </div>
     
-    <div id="cat" class="screen">
+    <!-- ЭКРАН ЖИВОТНОГО (Универсальный) -->
+    <div id="animalScreen" class="screen">
         <button class="back-btn" onclick="showScreen('menu'); stopAnim(); stopSound();">← НАЗАД</button>
         <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
-        <div class="header"><h2>🐱 КОШКА</h2></div>
-        <canvas id="catCanvas"></canvas>
-        <button class="play-btn" onclick="playSound('cat')">🔊 ЗАПУСТИТЬ</button>
-        <div class="tip-text">🐱 Мяуканье кошки → ты подпеваешь!</div>
+        <div class="header"><h2 id="animalTitle">ЖИВОТНОЕ</h2></div>
+        <canvas id="gameCanvas"></canvas>
+        <button id="playBtn" class="play-btn" onclick="playSound(currentAnimal)">🔊 ЗАПУСТИТЬ</button>
+        <div id="tipText" class="tip-text">Нажмите кнопку, чтобы начать</div>
     </div>
-    
-    <div id="dog" class="screen">
-        <button class="back-btn" onclick="showScreen('menu'); stopAnim(); stopSound();">← НАЗАД</button>
-        <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
-        <div class="header"><h2>🐕 СОБАКА</h2></div>
-        <canvas id="dogCanvas"></canvas>
-        <button class="play-btn" onclick="playSound('dog')">🔊 ЗАПУСТИТЬ</button>
-        <div class="tip-text">🐕 Скулёж собаки → ты подпеваешь!</div>
-    </div>
-    
-    <div id="parrot" class="screen">
-        <button class="back-btn" onclick="showScreen('menu'); stopAnim(); stopSound();">← НАЗАД</button>
-        <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
-        <div class="header"><h2>🦜 ПОПУГАЙ</h2></div>
-        <canvas id="parrotCanvas"></canvas>
-        <button class="play-btn" onclick="playSound('parrot')">🔊 ЗАПУСТИТЬ</button>
-        <div class="tip-text">🦜 Щебет попугая → ты подпеваешь!</div>
-    </div>
-    
-    <div id="raccoon" class="screen">
-        <button class="back-btn" onclick="showScreen('menu'); stopAnim(); stopSound();">← НАЗАД</button>
-        <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
-        <div class="header"><h2>🦝 ЕНОТ</h2></div>
-        <canvas id="raccoonCanvas"></canvas>
-        <button class="play-btn" onclick="playSound('raccoon')">🔊 ЗАПУСТИТЬ</button>
-        <div class="tip-text">🦝 Фырканье енота → ты подпеваешь!</div>
-    </div>
-    
-    <div id="squirrel" class="screen">
-        <button class="back-btn" onclick="showScreen('menu'); stopAnim(); stopSound();">← НАЗАД</button>
-        <img src="logo.jpeg" alt="Logo" class="logo" onerror="this.style.background='#333'">
-        <div class="header"><h2>🐿️ БЕЛКА</h2></div>
-        <canvas id="squirrelCanvas"></canvas>
-        <button class="play-btn" onclick="playSound('squirrel')">🔊 ЗАПУСТИТЬ</button>
-        <div class="tip-text">🐿️ Цоканье белки → ты подпеваешь!</div>
-    </div>
+
 </div>
 
 <script>
     let currentScreen = 'menu';
+    let currentAnimal = '';
     let animFrame = null;
     let audioReady = false;
     let currentAudio = null;
@@ -312,13 +278,30 @@
         const path = `assets/audio/${animal}.mp3`;
         currentAudio = new Audio(path);
         currentAudio.preload = "auto";
+        
+        // Если нет файла, играем синтезированный звук
         currentAudio.play().catch(e => {
-            console.warn(`⚠️ Файл не найден: ${path}`);
             playFallback(animal);
         });
-        currentAudio.onended = () => { currentAudio = null; };
+        
+        currentAudio.onended = () => { 
+            currentAudio = null; 
+            document.getElementById('playBtn').style.display = 'block';
+            document.getElementById('tipText').textContent = "Нажмите кнопку, чтобы начать";
+        };
+        
+        document.getElementById('playBtn').style.display = 'none';
+        const tips = {
+            cat: '🐱 Мяуканье кошки → ты подпеваешь!',
+            dog: '🐕 Скулёж собаки → ты подпеваешь!',
+            parrot: '🦜 Щебет попугая → ты подпеваешь!',
+            raccoon: '🦝 Фырканье енота → ты подпеваешь!',
+            squirrel: '🐿️ Цоканье белки → ты подпеваешь!'
+        };
+        document.getElementById('tipText').textContent = tips[animal] || 'Слушай и повторяй!';
     }
     
+    // Синтезатор звуков (работает без файлов)
     function playFallback(animal) {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
@@ -331,7 +314,12 @@
         gain.gain.setValueAtTime(0.25, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime+0.9);
         osc.connect(gain); gain.connect(ctx.destination);
-        osc.start(); osc.stop(ctx.currentTime+1);
+        osc.start(); 
+        osc.stop(ctx.currentTime+1);
+        setTimeout(() => { 
+            document.getElementById('playBtn').style.display = 'block';
+            document.getElementById('tipText').textContent = "Нажмите кнопку, чтобы начать";
+        }, 1000);
     }
     
     function copyPhone() {
@@ -350,22 +338,35 @@
     }
     
     function showScreen(id) {
+        // Очистка при уходе с экрана животного
         if (currentScreen !== id && ['cat','dog','parrot','raccoon','squirrel'].includes(currentScreen)) {
             stopSound();
             stopAnim();
         }
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        currentScreen = id;
-        if (['cat','dog','parrot','raccoon','squirrel'].includes(id)) {
+        
+        // Смена экранов
+        if(['cat','dog','parrot','raccoon','squirrel'].includes(id)) {
+            const names = { cat:'КОШКА', dog:'СОБАКА', parrot:'ПОПУГАЙ', raccoon:'ЕНОТ', squirrel:'БЕЛКА' };
+            document.getElementById('animalTitle').textContent = names[id] || id;
+            currentAnimal = id;
+            document.getElementById('playBtn').style.display = 'block';
+            document.getElementById('tipText').textContent = "Нажмите кнопку, чтобы начать";
+            document.getElementById('animalScreen').classList.add('active');
+            document.querySelectorAll('.screen').forEach(s => {
+                if(s.id !== 'animalScreen') s.classList.remove('active');
+            });
             setTimeout(()=> initCanvas(id), 50);
+        } else {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
+        currentScreen = id;
     }
     
     function stopAnim() { if(animFrame) cancelAnimationFrame(animFrame); animFrame = null; }
     
     function initCanvas(id) {
-        const cvs = document.getElementById(`${id}Canvas`);
+        const cvs = document.getElementById(`gameCanvas`);
         if(!cvs) return;
         
         if(handlers[id]) {
@@ -379,10 +380,10 @@
         cvs.width = w; cvs.height = h;
         
         const configs = {
-            cat: { bg: '#ffffff', items: ['🐭', '🐟', '🧶', '🐁'], spd: 2.0 },
-            dog: { bg: '#e0f7fa', items: ['🐾', '🦴', '⚽', '🥩'], spd: 1.8 },
-            parrot: { bg: '#e8f5e9', items: ['🦜', '🍎', '🌿', '🌻'], spd: 0.7 },
-            raccoon: { bg: '#f3e5f5', items: ['🦝', '🍎', '🌰', '🍇'], spd: 1.3 },
+            cat: { bg: '#ffffff', items: ['🐭', '🐟', '', '🐁'], spd: 2.0 },
+            dog: { bg: '#e0f7fa', items: ['🐾', '🦴', '⚽', ''], spd: 1.8 },
+            parrot: { bg: '#e8f5e9', items: ['🦜', '🍎', '', '🌻'], spd: 0.7 },
+            raccoon: { bg: '#f3e5f5', items: ['🦝', '🍎', '🌰', ''], spd: 1.3 },
             squirrel: { bg: '#fff3e0', items: ['🐿️', '🌰', '🥜', '🍂'], spd: 1.5 }
         };
         const cfg = configs[id];
@@ -410,7 +411,7 @@
         cvs.addEventListener('mousedown', handle);
         
         function draw() {
-            if(currentScreen !== id) return;
+            if(currentScreen !== id && currentScreen !== 'animalScreen') return;
             const ctx2 = cvs.getContext('2d');
             ctx2.fillStyle = cfg.bg;
             ctx2.fillRect(0, 0, w, h);
@@ -433,5 +434,25 @@
         draw();
     }
 </script>
+
+<!-- ✅ ЯНДЕКС.МЕТРИКА (ПРИВАТНЫЙ РЕЖИМ) -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(108468525, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:false, /* ⛔ Выключено (не записываем видео) */
+        ecommerce:"dataLayer"
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108468525" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /ЯНДЕКС.МЕТРИКА -->
+
 </body>
 </html>
